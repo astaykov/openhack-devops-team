@@ -48,6 +48,6 @@ stages:
       - task: CreateWorkItem@1
         inputs:
           workItemType: 'Issue'
-          title: 'Build failure for commit $(Build.SourceVersion)'
+          title: 'User-java Build failure for commit $(Build.SourceVersion)'
           associate: true
           description: 'This is automated work for failing build. Latest commit message: $(Build.SourceVersionMessage)'
