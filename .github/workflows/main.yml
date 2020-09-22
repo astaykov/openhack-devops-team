@@ -4,6 +4,8 @@ name: CI
 
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
+env:
+  repository: astaykov/openhack-devops-team/api-trips
 on:
   push:
     branches: [ shirihhhh-patch-1 ]
