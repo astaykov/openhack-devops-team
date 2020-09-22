@@ -32,7 +32,7 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 - task: CreateWorkItem@1
-  condition: fail()
+  condition: failed()
   inputs:
     workItemType: 'Bug'
     title: 'Build Failure'
