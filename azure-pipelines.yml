@@ -47,6 +47,7 @@ stages:
     steps:
       - task: CreateWorkItem@1
         inputs:
-          workItemType: 'Bug'
-          title: 'Build failure for commit $(Build.SourceVersionMessage) with message $(Build.SourceVersion)'
+          workItemType: 'Issue'
+          title: 'Build failure for commit $(Build.SourceVersion)'
           associate: true
+          description: 'This is automated work for failing build. Latest commit message: $(Build.SourceVersionMessage)'
