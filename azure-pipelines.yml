@@ -32,7 +32,7 @@ steps:
     ArtifactName: 'drop'
     publishLocation: 'Container'
 - task: CreateWorkItem@1
-  condition: failed()
+  condition: in(dependencies.Maven@3.result, 'Failed', 'SucceededWithIssues')
   inputs:
     workItemType: 'Bug'
     title: 'Build Failure'
