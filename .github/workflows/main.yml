@@ -5,7 +5,16 @@ name: CI
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 env:
-  repository: astaykov/openhack-devops-team/api-trips
+  registry: docker.pkg.github.com
+  repository: hattan/openhack-devops-team-gh/api-trips
+  docker_path: apis/trips
+  staging_url: https://openhackxv61mxh2trips-staging.azurewebsites.net/
+  prod_url: https://openhackxv61mxh2trips.azurewebsites.net/
+  resource_group: openhackxv61mxh2rg
+  webapp_name: openhackxv61mxh2trips
+  build_name: Trips
+  webv_path: apis/trips/webvalidate
+
 on:
   push:
     branches: [ shirihhhh-patch-1 ]
