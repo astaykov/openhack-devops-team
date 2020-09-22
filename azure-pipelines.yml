@@ -4,7 +4,12 @@
 # https://docs.microsoft.com/azure/devops/pipelines/languages/go
  
 trigger:
-- master
+  branches:
+    include:
+    - feature-*
+  paths:
+    include:
+    - apis/trips/*
  
 pool:
   vmImage: 'ubuntu-latest'
