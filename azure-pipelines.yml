@@ -9,7 +9,7 @@ trigger:
     - feature-*
   paths:
     include:
-    - apis/trips/*
+    - apis/userprofile/*
 
 pool:
   vmImage: 'ubuntu-latest'
