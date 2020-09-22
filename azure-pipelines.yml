@@ -28,6 +28,7 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 - task: CreateWorkItem@1
+  condition: failed()
   inputs:
     workItemType: 'Bug'
     title: 'Build Failure'
