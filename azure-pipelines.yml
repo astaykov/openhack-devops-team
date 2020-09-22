@@ -9,7 +9,7 @@ trigger:
     - feature-*
   paths:
     include:
-    - apis/userprofile/*
+    - apis/user-java/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -53,6 +53,6 @@ stages:
       - task: CreateWorkItem@1
         inputs:
           workItemType: 'Issue'
-          title: 'Userprofile Build failure for commit $(Build.SourceVersion)'
+          title: 'User-java Build failure for commit $(Build.SourceVersion)'
           associate: true
           description: 'This is automated work for failing build. Latest commit message: $(Build.SourceVersionMessage)'
