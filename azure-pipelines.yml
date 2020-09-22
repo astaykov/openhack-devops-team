@@ -17,7 +17,6 @@ pool:
 
 steps:
 - task: Maven@3
-  continueOnError: true
   inputs:
     mavenPomFile: './apis/user-java/pom.xml'
     mavenOptions: '-Xmx3072m'
@@ -28,7 +27,6 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     goals: 'package'
 - task: CreateWorkItem@1
-  condition: failed()
   inputs:
     workItemType: 'Bug'
     title: 'Build Failure'
