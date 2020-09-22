@@ -3,8 +3,14 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/java
 
+# specific path build
 trigger:
-- master
+  branches:
+    include:
+    - feature/*
+  paths:
+    include:
+    - apis/user-java/*
 
 pool:
   vmImage: 'ubuntu-latest'
