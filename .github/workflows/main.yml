@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ shirihhhh-patch-1 ]
+    branches: ['feature-hacker*']
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
