@@ -18,8 +18,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@shirihhhh-patch-1
+      - uses: actions/checkout@master
       - uses: actions/setup-go@v1
         with:
           go-version: '1.9.3'
-      - run: go test ./apis/trips/tests
+      - run: go test ./apis/trips/tripsgo/tripService.go
