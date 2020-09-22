@@ -28,4 +28,4 @@ jobs:
               go version
               go get  
           - run: go build .
-          - run: go test ./apis/trips/tripsgo/logger.go 
+          - run: go test ./tests
