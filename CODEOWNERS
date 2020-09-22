@@ -1,0 +1,5 @@
+# Defining code owners for the APIs
+/apis/poi/ @Erdemg
+/apis/trips/ @alschroe
+/apis/user-java/ @astaykov
+/apis/userprofile/ @shirihhh
