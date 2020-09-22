@@ -9,7 +9,7 @@ trigger:
     - feature-*
   paths:
     include:
-    - apis/userprofile/*
+    - apis/trips/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -39,6 +39,11 @@ stages:
         command: 'custom'
         workingDir: 'apis/userprofile'
         customCommand: 'run cover'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
   - job: createitem
     displayName: Create Item
