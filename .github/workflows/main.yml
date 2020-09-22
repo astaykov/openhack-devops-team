@@ -25,5 +25,5 @@ jobs:
       - run: |
            go version
            go get -u golang.org/x/lint/golint
-      - run: go build /apis/trips/Dockerfile
+      - run: go build ./apis/trips/Dockerfile
       - run: go test ./apis/trips/tripsgo/logger.go 
