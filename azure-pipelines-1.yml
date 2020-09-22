@@ -9,7 +9,7 @@ trigger:
     - feature-*
   paths:
     include:
-    - apis/userprofile/*
+    - apis/poi/*
 
 pool:
   vmImage: 'ubuntu-latest'
@@ -41,6 +41,11 @@ stages:
         command: 'pack'
         packagesToPack: '**/poi.csproj;!**/*[Tt]ests/UnitTests.csproj'
         versioningScheme: 'off'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
 
   - job: createitem
     displayName: Create Item
@@ -50,6 +55,6 @@ stages:
       - task: CreateWorkItem@1
         inputs:
           workItemType: 'Issue'
-          title: 'Userprofile Build failure for commit $(Build.SourceVersion)'
+          title: 'Poi Build failure for commit $(Build.SourceVersion)'
           associate: true
           description: 'This is automated work for failing build. Latest commit message: $(Build.SourceVersionMessage)'
