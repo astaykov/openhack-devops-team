@@ -7,7 +7,7 @@
 trigger:
   branches:
     include:
-    - feature/*
+    - feature-*
   paths:
     include:
     - apis/user-java/*
