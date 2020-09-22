@@ -25,5 +25,5 @@ jobs:
       - run: |
            go version
            go get -u golang.org/x/lint/golint
-      - run: go build ./main.go
+      - run: go build github.com/astaykov/openhack-devops-team/api/trips/main.go
       - run: go test ./apis/trips/tripsgo/logger.go 
