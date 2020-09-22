@@ -15,25 +15,38 @@ trigger:
 pool:
   vmImage: 'ubuntu-latest'
 
-steps:
-- task: Maven@3
-  inputs:
-    mavenPomFile: './apis/user-java/pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
-    testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: 'drop'
-    publishLocation: 'Container'
-- task: CreateWorkItem@1
-  condition: in(dependencies.Maven.result, 'Failed', 'SucceededWithIssues')
-  inputs:
-    workItemType: 'Bug'
-    title: 'Build Failure'
-    associate: true
+
+stages:
+
+- stage: buildandtests
+  displayName: Build and Test
+  jobs: 
+  - job: buildandtestj
+    displayName: Build and Test
+    steps:
+    - task: Maven@3
+      inputs:
+        mavenPomFile: './apis/user-java/pom.xml'
+        mavenOptions: '-Xmx3072m'
+        javaHomeOption: 'JDKVersion'
+        jdkVersionOption: '1.8'
+        jdkArchitectureOption: 'x64'
+        publishJUnitResults: true
+        testResultsFiles: '**/surefire-reports/TEST-*.xml'
+        goals: 'package'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop'
+        publishLocation: 'Container'
+
+  - job: createitem
+    displayName: Create Item
+    dependsOn: buildandtestj
+    condition: failed() # this job will only run if rununittest fails
+    steps:
+      - task: CreateWorkItem@1
+        inputs:
+          workItemType: 'Bug'
+          title: 'Build failure for commit $(Build.SourceVersionMessage) with message $(Build.SourceVersion)'
+          associate: true
