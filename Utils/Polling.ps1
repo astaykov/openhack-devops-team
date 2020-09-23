@@ -35,26 +35,31 @@ Param(
 $timer = 0
 
 while($true) {
-  $R = Invoke-WebRequest -URI $Uri
-  $timestamp = Get-Date
-  $output = ""
-  if ($displayUri) {
-    $output = '{0} | {1} | {2} | {3}' -f($timestamp, $R.StatusCode, $Uri, $R.Content)
+try{
+      $R = Invoke-WebRequest -URI $Uri
+      $timestamp = Get-Date
+      $output = ""
+      if ($displayUri) {
+        $output = '{0} | {1} | {2} | {3}' -f($timestamp, $R.StatusCode, $Uri, $R.Content)
     
-  } else {
+      } else {
 
-    $output = '{0} | {1}' -f($timestamp, $R.StatusCode)
-  }
-  Write-Output $output
-  $statusJson = $R.Content | ConvertFrom-Json
-  if($statusJson.status -eq "healthy")
-  {
-    exit 0
-  }
-  Start-Sleep -Seconds 1
-  $timer = $timer + 1
-  if($timer -ge $timeoutInSeconds)
-  {
-    exit 1
-  }
+        $output = '{0} | {1}' -f($timestamp, $R.StatusCode)
+      }
+      $statusJson = $R.Content | ConvertFrom-Json
+      if($statusJson.status -eq "healthy")
+      {
+        exit 0
+      }
+}
+catch [System.SystemException] {
+    $output = "Could not query web site, maybe down!"
+}
+      Write-Output $output
+      Start-Sleep -Seconds 1
+      $timer = $timer + 1
+      if($timer -ge $timeoutInSeconds)
+      {
+        exit 1
+      }
 }
