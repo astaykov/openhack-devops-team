@@ -6,7 +6,6 @@
 ## Build the Application
 
 ## Tests
-
 ### Running the unit tests
 
 ### Running the Integration Test
