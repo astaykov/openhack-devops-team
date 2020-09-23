@@ -9,10 +9,11 @@ trigger:
     - feature-*
   paths:
     include:
-    - apis/userprofile/*
+    - apis/trips/*
 
 pool:
   vmImage: 'ubuntu-latest'
+
 
 stages:
 - stage: buildandtests
@@ -21,29 +22,30 @@ stages:
   - job: buildandtestj
     displayName: Build and Test
     steps:
-    - task: NodeTool@0
+    - task: GoTool@0
       inputs:
-        versionSpec: '10.x'
-      displayName: 'Install Node.js'
-    - task: Npm@1
+        version: '1.13.5'
+    - task: Go@0
       inputs:
-        command: 'install'
-        workingDir: 'apis/userprofile'
-    - task: Npm@1
+        command: 'get'
+        arguments: '-d'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/apis/trips'
+    - task: Go@0
       inputs:
-        command: 'custom'
-        workingDir: 'apis/userprofile'
-        customCommand: 'run test'
-    - task: Npm@1
+        command: 'build'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/apis/trips'
+    - task: Go@0
       inputs:
-        command: 'custom'
-        workingDir: 'apis/userprofile'
-        customCommand: 'run cover'
+        command: 'test'
+        arguments: '-v'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/apis/trips/tests'
+      
+    - task: CopyFiles@2
+      inputs:
+        TargetFolder: '$(Build.ArtifactStagingDirectory)/apis/trips'
     - task: PublishBuildArtifacts@1
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop'
-        publishLocation: 'Container'
+        artifactName: drop
 
   - job: createitem
     displayName: Create Item
@@ -53,6 +55,6 @@ stages:
       - task: CreateWorkItem@1
         inputs:
           workItemType: 'Issue'
-          title: 'Userprofile Build failure for commit $(Build.SourceVersion)'
+          title: 'Trips Build failure for commit $(Build.SourceVersion)'
           associate: true
           description: 'This is automated work for failing build. Latest commit message: $(Build.SourceVersionMessage)'
