@@ -1,0 +1,48 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+env:
+  registry: docker.pkg.github.com
+  repository: hattan/openhack-devops-team-gh/api-trips
+  docker_path: apis/trips
+  staging_url: https://openhackxv61mxh2trips-staging.azurewebsites.net/
+  prod_url: https://openhackxv61mxh2trips.azurewebsites.net/
+  resource_group: openhackxv61mxh2rg
+  webapp_name: openhackxv61mxh2trips
+  build_name: Trips
+  webv_path: apis/trips/webvalidate
+
+on:
+  push:
+    branches: [ shirihhhh-patch-1 ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+    # The type of runner that the job will run on
+      build_and_test:
+        runs-on: ubuntu-latest
+        defaults:
+          run: 
+            shell: bash
+            working-directory: apis/trips
+        steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+          - uses: actions/checkout@v2
+          - uses: actions/setup-go@v2
+            with:
+             go-version: '1.12.0'
+          - run: |
+              go version
+              go get  
+          - run: go build .
+          - run: go test ./tests
+          - uses: actions/github-script@0.9.0
+            if: failure()
+            with:
+              github-token: ${{secrets.GITHUB_TOKEN}}
+              script: |
+                let body = "${{ env.build_name }} Worflow Failure \n Build Number: ${{ github.run_number }} \n Build Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }} \n SHA: [${{ github.sha }}](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) \n";github.issues.create({owner: context.repo.owner,repo: context.repo.repo,title: "${{ env.build_name }} Workflow ${{ github.run_number }} Failed! ",
