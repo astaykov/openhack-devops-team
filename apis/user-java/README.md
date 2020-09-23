@@ -74,3 +74,4 @@ curl -X PATCH --header 'Content-Type: application/json' --header 'Accept: applic
 
 
 Included Polling.PS1 to artifacts
+Full CI/CD Pipeline
